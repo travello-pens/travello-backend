@@ -1,7 +1,7 @@
-# Capstone Project : Generate Invoice System Backend
+# Workshop Project : Travek Agent System Backend
 
 API Contract :
-https://app.swaggerhub.com/apis/maderahano/generate-invoice_system_api_documentation/2.0
+- 
 
 Tools :
 - Golang
@@ -12,4 +12,4 @@ Tools :
 
 ERD :
 
-![ERD Generate Invoice System](s)
+![ERD Generate Invoice System](asset/ERD-Travel-Agent.jpeg)

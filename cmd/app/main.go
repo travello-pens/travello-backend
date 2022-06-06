@@ -12,8 +12,8 @@ import (
 	echoSwag "github.com/swaggo/echo-swagger"
 )
 
-// @title        Generate Invoice System API Documentation
-// @description  This is Generate Invoice System API
+// @title        Travel Agent System API Documentation
+// @description  This is Travel Agent System API
 // @version      2.0
 // @host         localhost:8888
 // @BasePath

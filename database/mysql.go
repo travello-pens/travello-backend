@@ -30,4 +30,10 @@ func InitDB(conf config.Config) *gorm.DB {
 
 func initMigrate(db *gorm.DB) {
 	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.TravelAgent{})
+	db.AutoMigrate(&model.TravelAgentSocialMedia{})
+	db.AutoMigrate(&model.Product{})
+	db.AutoMigrate(&model.ProductPhoto{})
+	db.AutoMigrate(&model.Order{})
+	db.AutoMigrate(&model.Location{})
 }

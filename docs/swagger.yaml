@@ -1,4 +1,92 @@
 definitions:
+  model.Location:
+    properties:
+      id:
+        type: integer
+      id_product:
+        type: integer
+      name:
+        type: string
+    type: object
+  model.Order:
+    properties:
+      id:
+        type: integer
+      id_product:
+        type: integer
+      id_travel_agent:
+        type: integer
+      order_address:
+        type: string
+      order_date:
+        type: string
+      order_name:
+        type: string
+      order_phone_number:
+        type: string
+    type: object
+  model.Product:
+    properties:
+      airport_pickup:
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      id_travel_agent:
+        type: integer
+      lodging:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+      refund:
+        type: integer
+      tax:
+        type: integer
+    type: object
+  model.ProductPhoto:
+    properties:
+      file_name:
+        type: string
+      id:
+        type: integer
+      id_product:
+        type: integer
+      photo_name:
+        type: string
+    type: object
+  model.TravelAgent:
+    properties:
+      address:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  model.TravelAgentSocialMedia:
+    properties:
+      facebook:
+        type: string
+      id:
+        type: integer
+      id_travel_agent:
+        type: integer
+      instagram:
+        type: string
+      tiktok:
+        type: string
+      twitter:
+        type: string
+      website:
+        type: string
+      youtube:
+        type: string
+    type: object
   model.User:
     properties:
       created_at:
@@ -15,10 +103,268 @@ definitions:
 host: localhost:8888
 info:
   contact: {}
-  description: This is Generate Invoice System API
-  title: Generate Invoice System API Documentation
+  description: This is Travel Agent System API
+  title: Travel Agent System API Documentation
   version: "2.0"
 paths:
+  /agent:
+    get:
+      consumes:
+      - application/json
+      description: User can get all agents information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+      security:
+      - JWT: []
+      summary: Get All Travel Agents Information
+      tags:
+      - TravelAgent
+    post:
+      consumes:
+      - application/json
+      description: User can create agent
+      parameters:
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.TravelAgent'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+      security:
+      - JWT: []
+      summary: Create Travel Agent
+      tags:
+      - TravelAgent
+  /agent/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: User can delete agent information if they want it
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+      security:
+      - JWT: []
+      summary: Delete Travel Agent Information
+      tags:
+      - TravelAgent
+    get:
+      consumes:
+      - application/json
+      description: User can get agent information by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+      security:
+      - JWT: []
+      summary: Get Travel Agent Information by Id
+      tags:
+      - TravelAgent
+    put:
+      consumes:
+      - application/json
+      description: User can update agent information
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.TravelAgent'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+      security:
+      - JWT: []
+      summary: Update Travel Agent Information
+      tags:
+      - TravelAgent
+  /location:
+    get:
+      consumes:
+      - application/json
+      description: User can get all locations information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Location'
+      security:
+      - JWT: []
+      summary: Get All Locations Information
+      tags:
+      - Location
+    post:
+      consumes:
+      - application/json
+      description: User can create location
+      parameters:
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Location'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Location'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Location'
+      security:
+      - JWT: []
+      summary: Create Location
+      tags:
+      - Location
+  /location/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: User can delete location information if they want it
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Location'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Location'
+      security:
+      - JWT: []
+      summary: Delete Location Information
+      tags:
+      - Location
+    get:
+      consumes:
+      - application/json
+      description: User can get location information by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Location'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Location'
+      security:
+      - JWT: []
+      summary: Get Location Information by Id
+      tags:
+      - Location
+    put:
+      consumes:
+      - application/json
+      description: User can update location information
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Location'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Location'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Location'
+      security:
+      - JWT: []
+      summary: Update Location Information
+      tags:
+      - Location
   /login:
     post:
       consumes:
@@ -53,6 +399,395 @@ paths:
       summary: Login User
       tags:
       - User
+  /order:
+    get:
+      consumes:
+      - application/json
+      description: User can get all orders information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Order'
+      security:
+      - JWT: []
+      summary: Get All Orders Information
+      tags:
+      - Order
+    post:
+      consumes:
+      - application/json
+      description: User can create order
+      parameters:
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Order'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Order'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Order'
+      security:
+      - JWT: []
+      summary: Create Order
+      tags:
+      - Order
+  /order/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: User can delete order information if they want it
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Order'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Order'
+      security:
+      - JWT: []
+      summary: Delete Order Information
+      tags:
+      - Order
+    get:
+      consumes:
+      - application/json
+      description: User can get order information by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Order'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Order'
+      security:
+      - JWT: []
+      summary: Get Order Information by Id
+      tags:
+      - Order
+    put:
+      consumes:
+      - application/json
+      description: User can update order information
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Order'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Order'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Order'
+      security:
+      - JWT: []
+      summary: Update Order Information
+      tags:
+      - Order
+  /photo:
+    get:
+      consumes:
+      - application/json
+      description: User can get all photos information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+      security:
+      - JWT: []
+      summary: Get All ProductPhotos Information
+      tags:
+      - ProductPhoto
+  /photo/{id}:
+    get:
+      consumes:
+      - application/json
+      description: User can get photo information by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+      security:
+      - JWT: []
+      summary: Get ProductPhoto Information by Id
+      tags:
+      - ProductPhoto
+  /product:
+    get:
+      consumes:
+      - application/json
+      description: User can get all products information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+      security:
+      - JWT: []
+      summary: Get All Products Information
+      tags:
+      - Product
+    post:
+      consumes:
+      - application/json
+      description: User can create product
+      parameters:
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Product'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Product'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Product'
+      security:
+      - JWT: []
+      summary: Create Product
+      tags:
+      - Product
+  /product-photo:
+    post:
+      consumes:
+      - application/json
+      description: User can create product photo
+      parameters:
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.ProductPhoto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+      security:
+      - JWT: []
+      summary: Create Product Photo
+      tags:
+      - ProductPhoto
+  /product-photo/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: User can delete product photo information if they want it
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+      security:
+      - JWT: []
+      summary: Delete Product Photo Information
+      tags:
+      - ProductPhoto
+    put:
+      consumes:
+      - application/json
+      description: User can update product photo information
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.ProductPhoto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+      security:
+      - JWT: []
+      summary: Update Product Photo Information
+      tags:
+      - ProductPhoto
+  /product/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: User can delete product information if they want it
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Product'
+      security:
+      - JWT: []
+      summary: Delete Product Information
+      tags:
+      - Product
+    get:
+      consumes:
+      - application/json
+      description: User can get product information by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Product'
+      security:
+      - JWT: []
+      summary: Get Product Information by Id
+      tags:
+      - Product
+    put:
+      consumes:
+      - application/json
+      description: User can update product information
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Product'
+      security:
+      - JWT: []
+      summary: Update Product Information
+      tags:
+      - Product
   /register:
     post:
       consumes:
@@ -83,6 +818,136 @@ paths:
       summary: Register User
       tags:
       - User
+  /travel-agent-social-media:
+    get:
+      consumes:
+      - application/json
+      description: User can get all travel agents social media information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+      security:
+      - JWT: []
+      summary: Get All Travel Agents Social Media Information
+      tags:
+      - TravelAgentSocialMedia
+    post:
+      consumes:
+      - application/json
+      description: User can create travel agent social media information
+      parameters:
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.TravelAgentSocialMedia'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+      security:
+      - JWT: []
+      summary: Create Travel Agent Social Media
+      tags:
+      - TravelAgentSocialMedia
+  /travel-agent-social-media/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: User can delete travel agent social media information if they want
+        it
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+      security:
+      - JWT: []
+      summary: Delete Travel Agent Social Media Information
+      tags:
+      - TravelAgentSocialMedia
+    get:
+      consumes:
+      - application/json
+      description: User can get travel agent social media information by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+      security:
+      - JWT: []
+      summary: Get Travel Agent Social Media Information by Id
+      tags:
+      - TravelAgentSocialMedia
+    put:
+      consumes:
+      - application/json
+      description: User can update travel agent social media information
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: required
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.TravelAgentSocialMedia'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+      security:
+      - JWT: []
+      summary: Update Travel Agent Social Media Information
+      tags:
+      - TravelAgentSocialMedia
   /user:
     get:
       consumes:

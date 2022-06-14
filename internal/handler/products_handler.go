@@ -88,6 +88,60 @@ func (ce *EchoProductController) GetProductController(c echo.Context) error {
 	})
 }
 
+// GetProductsByLocationController godoc
+// @Summary      Get Product Information by Location
+// @Description  User can get product information by location
+// @Tags         Product
+// @accept       json
+// @Produce      json
+// @Router       /product/location/{location} [get]
+// @param        location    path      string            true  "location"
+// @Success      200  {object}  model.Product
+// @Failure      404  {object}  model.Product
+// @Security     JWT
+func (ce *EchoProductController) GetProductsByLocationController(c echo.Context) error {
+	location := c.Param("location")
+
+	products, err := ce.Service.GetProductByLocationService(location)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"messages": "no location",
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"messages": "success",
+		"products": products,
+	})
+}
+
+// GetProductsByAgentController godoc
+// @Summary      Get Product Information by Travel Agent
+// @Description  User can get product information by travel agent
+// @Tags         Product
+// @accept       json
+// @Produce      json
+// @Router       /product/agent/{agent} [get]
+// @param        agent    path      string            true  "agent"
+// @Success      200  {object}  model.Product
+// @Failure      404  {object}  model.Product
+// @Security     JWT
+func (ce *EchoProductController) GetProductsByAgentController(c echo.Context) error {
+	agent := c.Param("agent")
+
+	products, err := ce.Service.GetProductByAgentService(agent)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"messages": "no agent travel",
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"messages": "success",
+		"products": products,
+	})
+}
+
 // UpdateProductController godoc
 // @Summary      Update Product Information
 // @Description  User can update product information

@@ -34,6 +34,21 @@ func (r *RepositoryMysqlLayer) GetOrderByID(id int) (order model.Order, err erro
 	return
 }
 
+func (r *RepositoryMysqlLayer) GetOrderByProduct(product string) (order model.Order, err error) {
+	var prod model.Product
+	res1 := r.DB.Where("name = ?", product).Find(&prod)
+	if res1.RowsAffected < 1 {
+		err = fmt.Errorf("not found")
+	}
+
+	res2 := r.DB.Where("id_product = ?", prod.ID).Find(&order)
+	if res2.RowsAffected < 1 {
+		err = fmt.Errorf("order not found")
+	}
+
+	return
+}
+
 func (r *RepositoryMysqlLayer) UpdateOrderByID(id int, order model.Order) error {
 	res := r.DB.Where("id = ?", id).UpdateColumns(&order)
 	if res.RowsAffected < 1 {

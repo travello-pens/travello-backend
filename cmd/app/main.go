@@ -25,8 +25,16 @@ func main() {
 	config := conf.InitConfig()
 	e := echo.New()
 
+	e.Static("storage", "storage")
+
 	rest.RegisterAuthGroupAPI(e, config)
 	rest.RegisterUserGroupAPI(e, config)
+	rest.RegisterLocationGroupAPI(e, config)
+	rest.RegisterOrderGroupAPI(e, config)
+	rest.RegisterProductGroupAPI(e, config)
+	rest.RegisterProductPhotoGroupAPI(e, config)
+	rest.RegisterTravelAgentGroupAPI(e, config)
+	rest.RegisterTravelAgentSocialMediaGroupAPI(e, config)
 
 	e.GET("/swagger/*", echoSwag.WrapHandler)
 	docs.SwaggerInfo.Host = os.Getenv("APP_HOST")

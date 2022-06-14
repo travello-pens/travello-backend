@@ -27,4 +27,6 @@ func RegisterProductGroupAPI(e *echo.Echo, conf config.Config) {
 	apiProduct.GET("/:id", hand.GetProductController)
 	apiProduct.PUT("/:id", hand.UpdateProductController)
 	apiProduct.DELETE("/:id", hand.DeleteProductController)
+	apiProduct.GET("/agent/:agent", hand.GetProductsByAgentController)
+	apiProduct.GET("/location/:location", hand.GetProductsByLocationController)
 }

@@ -549,6 +549,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/order/product/{product}": {
+            "get": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "User can get order information by product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get Order Information by Product",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "product",
+                        "name": "product",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Order"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.Order"
+                        }
+                    }
+                }
+            }
+        },
         "/order/{id}": {
             "get": {
                 "security": [
@@ -704,6 +747,49 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ProductPhoto"
+                        }
+                    }
+                }
+            }
+        },
+        "/photo/product/{product}": {
+            "get": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "User can get product photo information by product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProductPhoto"
+                ],
+                "summary": "Get Product Photo Information by Product",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "product",
+                        "name": "product",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ProductPhoto"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/model.ProductPhoto"
                         }
@@ -963,6 +1049,92 @@ const docTemplate = `{
                 }
             }
         },
+        "/product/agent/{agent}": {
+            "get": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "User can get product information by travel agent",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get Product Information by Travel Agent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "agent",
+                        "name": "agent",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Product"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.Product"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/location/{location}": {
+            "get": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "User can get product information by location",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get Product Information by Location",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "location",
+                        "name": "location",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Product"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.Product"
+                        }
+                    }
+                }
+            }
+        },
         "/product/{id}": {
             "get": {
                 "security": [
@@ -1207,6 +1379,49 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.TravelAgentSocialMedia"
+                        }
+                    }
+                }
+            }
+        },
+        "/travel-agent-social-media/agent/{agent}": {
+            "get": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "User can get travel agent social media information by travel agent",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TravelAgentSocialMedia"
+                ],
+                "summary": "Get Travel Agent Social Media Information by Travel Agent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "agent",
+                        "name": "agent",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.TravelAgentSocialMedia"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/model.TravelAgentSocialMedia"
                         }
@@ -1524,13 +1739,16 @@ const docTemplate = `{
         "model.Location": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
-                "id_product": {
-                    "type": "integer"
-                },
                 "name": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }
@@ -1538,13 +1756,13 @@ const docTemplate = `{
         "model.Order": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
                 "id_product": {
-                    "type": "integer"
-                },
-                "id_travel_agent": {
                     "type": "integer"
                 },
                 "order_address": {
@@ -1558,6 +1776,9 @@ const docTemplate = `{
                 },
                 "order_phone_number": {
                     "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },
@@ -1567,10 +1788,16 @@ const docTemplate = `{
                 "airport_pickup": {
                     "type": "integer"
                 },
+                "created_at": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
                 "id": {
+                    "type": "integer"
+                },
+                "id_location": {
                     "type": "integer"
                 },
                 "id_travel_agent": {
@@ -1590,12 +1817,18 @@ const docTemplate = `{
                 },
                 "tax": {
                     "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },
         "model.ProductPhoto": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "file_name": {
                     "type": "string"
                 },
@@ -1605,7 +1838,7 @@ const docTemplate = `{
                 "id_product": {
                     "type": "integer"
                 },
-                "photo_name": {
+                "updated_at": {
                     "type": "string"
                 }
             }
@@ -1616,6 +1849,9 @@ const docTemplate = `{
                 "address": {
                     "type": "string"
                 },
+                "created_at": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -1624,12 +1860,18 @@ const docTemplate = `{
                 },
                 "phone_number": {
                     "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },
         "model.TravelAgentSocialMedia": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "facebook": {
                     "type": "string"
                 },
@@ -1646,6 +1888,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "twitter": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 },
                 "website": {

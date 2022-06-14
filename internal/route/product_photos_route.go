@@ -27,4 +27,5 @@ func RegisterProductPhotoGroupAPI(e *echo.Echo, conf config.Config) {
 	apiProductPhoto.GET("/:id", hand.GetProductPhotoController)
 	apiProductPhoto.PUT("/:id", hand.UpdateProductPhotoController)
 	apiProductPhoto.DELETE("/:id", hand.DeleteProductPhotoController)
+	apiProductPhoto.GET("/product/:product", hand.GetProductPhotoByProductController)
 }

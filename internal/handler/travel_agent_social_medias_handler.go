@@ -88,6 +88,33 @@ func (ce *EchoTravelAgentSocialMediaController) GetTravelAgentSocialMediaControl
 	})
 }
 
+// GetTravelAgentSocialMediaByTravelAgentController godoc
+// @Summary      Get Travel Agent Social Media Information by Travel Agent
+// @Description  User can get travel agent social media information by travel agent
+// @Tags         TravelAgentSocialMedia
+// @accept       json
+// @Produce      json
+// @Router       /travel-agent-social-media/agent/{agent} [get]
+// @param        agent    path      string            true  "agent"
+// @Success      200  {object}  model.TravelAgentSocialMedia
+// @Failure      404  {object}  model.TravelAgentSocialMedia
+// @Security     JWT
+func (ce *EchoTravelAgentSocialMediaController) GetTravelAgentSocialMediaByTravelAgentController(c echo.Context) error {
+	agent := c.Param("agent")
+
+	media, err := ce.Service.GetTravelAgentSocialMediaByTravelAgentService(agent)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"messages": "no agent travel",
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"messages":     "success",
+		"social media": media,
+	})
+}
+
 // UpdateTravelAgentSocialMediaController godoc
 // @Summary      Update Travel Agent Social Media Information
 // @Description  User can update travel agent social media information

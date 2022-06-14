@@ -1,7 +1,10 @@
 package handler
 
 import (
+	"io"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
 
 	"travel-agent-backend/internal/adapter"
@@ -26,10 +29,39 @@ type EchoProductPhotoController struct {
 // @Failure      500   {object}  model.ProductPhoto
 // @Security     JWT
 func (ce *EchoProductPhotoController) CreateProductPhotoController(c echo.Context) error {
+	// Read form fileds
 	photo := model.ProductPhoto{}
 	c.Bind(&photo)
 
-	err := ce.Service.CreateProductPhotoService(photo)
+	//-----------
+	// Read file
+	//-----------
+
+	// Source
+	file, err1 := c.FormFile("file")
+	if err1 != nil {
+		return err1
+	}
+
+	src, err2 := file.Open()
+	if err2 != nil {
+		return err2
+	}
+	defer src.Close()
+
+	// Destination
+	dst, err3 := os.Create(filepath.Join("storage/", filepath.Base(file.Filename)))
+	if err3 != nil {
+		return err3
+	}
+	defer dst.Close()
+
+	// Copy
+	if _, errCopy := io.Copy(dst, src); errCopy != nil {
+		return errCopy
+	}
+
+	err := ce.Service.CreateProductPhotoService(photo, file)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"messages": "internal server error",
@@ -75,7 +107,7 @@ func (ce *EchoProductPhotoController) GetProductPhotoController(c echo.Context) 
 	id := c.Param("id")
 	intID, _ := strconv.Atoi(id)
 
-	photo, err := ce.Service.GetProductPhotoByIDService(intID)
+	photo, urlImage, err := ce.Service.GetProductPhotoByIDService(intID)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]interface{}{
 			"messages": "no id",
@@ -85,6 +117,35 @@ func (ce *EchoProductPhotoController) GetProductPhotoController(c echo.Context) 
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"messages": "success",
 		"photo":    photo,
+		"file":     urlImage,
+	})
+}
+
+// GetProductPhotoByProductController godoc
+// @Summary      Get Product Photo Information by Product
+// @Description  User can get product photo information by product
+// @Tags         ProductPhoto
+// @accept       json
+// @Produce      json
+// @Router       /photo/product/{product} [get]
+// @param        product    path      string          true  "product"
+// @Success      200  {object}  model.ProductPhoto
+// @Failure      404  {object}  model.ProductPhoto
+// @Security     JWT
+func (ce *EchoProductPhotoController) GetProductPhotoByProductController(c echo.Context) error {
+	product := c.Param("product")
+
+	photo, urlImage, err := ce.Service.GetProductPhotoByProductService(product)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"messages": "no product",
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"messages": "success",
+		"photo":    photo,
+		"file":     urlImage,
 	})
 }
 
@@ -101,13 +162,43 @@ func (ce *EchoProductPhotoController) GetProductPhotoController(c echo.Context) 
 // @Failure      500   {object}  model.ProductPhoto
 // @Security     JWT
 func (ce *EchoProductPhotoController) UpdateProductPhotoController(c echo.Context) error {
+	// Get ID Param
 	id := c.Param("id")
 	intID, _ := strconv.Atoi(id)
 
+	// Read form fileds
 	photo := model.ProductPhoto{}
 	c.Bind(&photo)
 
-	err := ce.Service.UpdateProductPhotoByIDService(intID, photo)
+	//-----------
+	// Read file
+	//-----------
+
+	// Source
+	file, err1 := c.FormFile("file")
+	if err1 != nil {
+		return err1
+	}
+
+	src, err2 := file.Open()
+	if err2 != nil {
+		return err2
+	}
+	defer src.Close()
+
+	// Destination
+	dst, err3 := os.Create(filepath.Join("storage/", filepath.Base(file.Filename)))
+	if err3 != nil {
+		return err3
+	}
+	defer dst.Close()
+
+	// Copy
+	if _, errCopy := io.Copy(dst, src); errCopy != nil {
+		return errCopy
+	}
+
+	err := ce.Service.UpdateProductPhotoByIDService(intID, photo, file)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"messages": "no id or no change",

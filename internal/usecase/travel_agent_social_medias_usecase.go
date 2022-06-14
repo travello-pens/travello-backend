@@ -23,6 +23,10 @@ func (s *serviceTravelAgentSocialMedia) GetTravelAgentSocialMediaByIDService(id 
 	return s.repo.GetTravelAgentSocialMediaByID(id)
 }
 
+func (s *serviceTravelAgentSocialMedia) GetTravelAgentSocialMediaByTravelAgentService(agent string) (media model.TravelAgentSocialMedia, err error) {
+	return s.repo.GetTravelAgentSocialMediaByTravelAgent(agent)
+}
+
 func (s *serviceTravelAgentSocialMedia) UpdateTravelAgentSocialMediaByIDService(id int, media model.TravelAgentSocialMedia) error {
 	return s.repo.UpdateTravelAgentSocialMediaByID(id, media)
 }

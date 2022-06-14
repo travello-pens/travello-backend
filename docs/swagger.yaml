@@ -1,20 +1,22 @@
 definitions:
   model.Location:
     properties:
+      created_at:
+        type: string
       id:
         type: integer
-      id_product:
-        type: integer
       name:
+        type: string
+      updated_at:
         type: string
     type: object
   model.Order:
     properties:
+      created_at:
+        type: string
       id:
         type: integer
       id_product:
-        type: integer
-      id_travel_agent:
         type: integer
       order_address:
         type: string
@@ -24,14 +26,20 @@ definitions:
         type: string
       order_phone_number:
         type: string
+      updated_at:
+        type: string
     type: object
   model.Product:
     properties:
       airport_pickup:
         type: integer
+      created_at:
+        type: string
       description:
         type: string
       id:
+        type: integer
+      id_location:
         type: integer
       id_travel_agent:
         type: integer
@@ -45,21 +53,27 @@ definitions:
         type: integer
       tax:
         type: integer
+      updated_at:
+        type: string
     type: object
   model.ProductPhoto:
     properties:
+      created_at:
+        type: string
       file_name:
         type: string
       id:
         type: integer
       id_product:
         type: integer
-      photo_name:
+      updated_at:
         type: string
     type: object
   model.TravelAgent:
     properties:
       address:
+        type: string
+      created_at:
         type: string
       id:
         type: integer
@@ -67,9 +81,13 @@ definitions:
         type: string
       phone_number:
         type: string
+      updated_at:
+        type: string
     type: object
   model.TravelAgentSocialMedia:
     properties:
+      created_at:
+        type: string
       facebook:
         type: string
       id:
@@ -81,6 +99,8 @@ definitions:
       tiktok:
         type: string
       twitter:
+        type: string
+      updated_at:
         type: string
       website:
         type: string
@@ -528,6 +548,33 @@ paths:
       summary: Update Order Information
       tags:
       - Order
+  /order/product/{product}:
+    get:
+      consumes:
+      - application/json
+      description: User can get order information by product
+      parameters:
+      - description: product
+        in: path
+        name: product
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Order'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Order'
+      security:
+      - JWT: []
+      summary: Get Order Information by Product
+      tags:
+      - Order
   /photo:
     get:
       consumes:
@@ -570,6 +617,33 @@ paths:
       security:
       - JWT: []
       summary: Get ProductPhoto Information by Id
+      tags:
+      - ProductPhoto
+  /photo/product/{product}:
+    get:
+      consumes:
+      - application/json
+      description: User can get product photo information by product
+      parameters:
+      - description: product
+        in: path
+        name: product
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ProductPhoto'
+      security:
+      - JWT: []
+      summary: Get Product Photo Information by Product
       tags:
       - ProductPhoto
   /product:
@@ -788,6 +862,60 @@ paths:
       summary: Update Product Information
       tags:
       - Product
+  /product/agent/{agent}:
+    get:
+      consumes:
+      - application/json
+      description: User can get product information by travel agent
+      parameters:
+      - description: agent
+        in: path
+        name: agent
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Product'
+      security:
+      - JWT: []
+      summary: Get Product Information by Travel Agent
+      tags:
+      - Product
+  /product/location/{location}:
+    get:
+      consumes:
+      - application/json
+      description: User can get product information by location
+      parameters:
+      - description: location
+        in: path
+        name: location
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Product'
+      security:
+      - JWT: []
+      summary: Get Product Information by Location
+      tags:
+      - Product
   /register:
     post:
       consumes:
@@ -946,6 +1074,33 @@ paths:
       security:
       - JWT: []
       summary: Update Travel Agent Social Media Information
+      tags:
+      - TravelAgentSocialMedia
+  /travel-agent-social-media/agent/{agent}:
+    get:
+      consumes:
+      - application/json
+      description: User can get travel agent social media information by travel agent
+      parameters:
+      - description: agent
+        in: path
+        name: agent
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.TravelAgentSocialMedia'
+      security:
+      - JWT: []
+      summary: Get Travel Agent Social Media Information by Travel Agent
       tags:
       - TravelAgentSocialMedia
   /user:

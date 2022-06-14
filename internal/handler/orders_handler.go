@@ -88,6 +88,33 @@ func (ce *EchoOrderController) GetOrderController(c echo.Context) error {
 	})
 }
 
+// GetOrderByProductController godoc
+// @Summary      Get Order Information by Product
+// @Description  User can get order information by product
+// @Tags         Order
+// @accept       json
+// @Produce      json
+// @Router       /order/product/{product} [get]
+// @param        product    path      string          true  "product"
+// @Success      200  {object}  model.Order
+// @Failure      404  {object}  model.Order
+// @Security     JWT
+func (ce *EchoOrderController) GetOrderByProductController(c echo.Context) error {
+	product := c.Param("product")
+
+	order, err := ce.Service.GetOrderByProductService(product)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"messages": "no product",
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"messages": "success",
+		"order":    order,
+	})
+}
+
 // UpdateOrderController godoc
 // @Summary      Update Order Information
 // @Description  User can update order information

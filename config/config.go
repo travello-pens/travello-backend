@@ -15,11 +15,11 @@ type Config struct {
 func InitConfig() Config {
 	return Config{
 		SERVER_ADDRESS: GetOrDefault("SERVER_ADDRESS", "0.0.0.0:8888"),
-		DB_USERNAME:    GetOrDefault("DB_USERNAME", "travello-backend"),
-		DB_PASSWORD:    GetOrDefault("DB_PASSWORD", "travelmhHyUEf8h"),
+		DB_USERNAME:    GetOrDefault("DB_USERNAME", "root"),
+		DB_PASSWORD:    GetOrDefault("DB_PASSWORD", ""),
 		DB_NAME:        GetOrDefault("DB_NAME", "travello"),
 		DB_PORT:        GetOrDefault("DB_PORT", "3306"),
-		DB_HOST:        GetOrDefault("DB_HOST", "10.0.0.4"),
+		DB_HOST:        GetOrDefault("DB_HOST", "127.0.0.1"),
 		JWT_KEY:        GetOrDefault("JWT_KEY", "AlphaWolf"),
 	}
 }

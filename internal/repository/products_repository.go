@@ -34,6 +34,36 @@ func (r *RepositoryMysqlLayer) GetProductByID(id int) (product model.Product, er
 	return
 }
 
+func (r *RepositoryMysqlLayer) GetProductsByLocation(location string) (product model.Product, err error) {
+	var loc model.Location
+	res1 := r.DB.Where("name = ?", location).Find(&loc)
+	if res1.RowsAffected < 1 {
+		err = fmt.Errorf("location not found")
+	}
+
+	res2 := r.DB.Where("id_location = ?", loc.ID).Find(&product)
+	if res2.RowsAffected < 1 {
+		err = fmt.Errorf("product not found")
+	}
+
+	return
+}
+
+func (r *RepositoryMysqlLayer) GetProductsByAgent(agent string) (product model.Product, err error) {
+	var agt model.TravelAgent
+	res1 := r.DB.Where("name = ?", agent).Find(&agt)
+	if res1.RowsAffected < 1 {
+		err = fmt.Errorf("travel agent not found")
+	}
+
+	res2 := r.DB.Where("id_travel_agent = ?", agt.ID).Find(&product)
+	if res2.RowsAffected < 1 {
+		err = fmt.Errorf("product not found")
+	}
+
+	return
+}
+
 func (r *RepositoryMysqlLayer) UpdateProductByID(id int, product model.Product) error {
 	res := r.DB.Where("id = ?", id).UpdateColumns(&product)
 	if res.RowsAffected < 1 {

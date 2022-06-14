@@ -27,4 +27,5 @@ func RegisterTravelAgentSocialMediaGroupAPI(e *echo.Echo, conf config.Config) {
 	apiTravelAgentSocialMedia.GET("/:id", hand.GetTravelAgentSocialMediaController)
 	apiTravelAgentSocialMedia.PUT("/:id", hand.UpdateTravelAgentSocialMediaController)
 	apiTravelAgentSocialMedia.DELETE("/:id", hand.DeleteTravelAgentSocialMediaController)
+	apiTravelAgentSocialMedia.GET("/agent/:agent", hand.GetTravelAgentSocialMediaByTravelAgentController)
 }

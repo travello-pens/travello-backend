@@ -2,6 +2,8 @@ package repository
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"travel-agent-backend/internal/adapter"
 	"travel-agent-backend/internal/model"
@@ -25,16 +27,55 @@ func (r *RepositoryMysqlLayer) GetAllProductPhotos() []model.ProductPhoto {
 	return photos
 }
 
-func (r *RepositoryMysqlLayer) GetProductPhotoByID(id int) (photo model.ProductPhoto, err error) {
+func (r *RepositoryMysqlLayer) GetProductPhotoByID(id int) (model.ProductPhoto, string, error) {
+	var photo model.ProductPhoto
+
 	res := r.DB.Where("id = ?", id).Find(&photo)
 	if res.RowsAffected < 1 {
-		err = fmt.Errorf("not found")
+		return photo, "", fmt.Errorf("not found")
 	}
 
-	return
+	filePath := "storage/"
+	urlImage := filePath + photo.File_Name
+
+	return photo, urlImage, nil
+}
+
+func (r *RepositoryMysqlLayer) GetProductPhotoByProduct(product string) (model.ProductPhoto, string, error) {
+	var prod model.Product
+	res1 := r.DB.Where("name = ?", product).Find(&prod)
+	if res1.RowsAffected < 1 {
+		return model.ProductPhoto{}, "", fmt.Errorf("not found")
+	}
+
+	var photo model.ProductPhoto
+	res2 := r.DB.Where("id_product = ?", prod.ID).Find(&photo)
+	if res2.RowsAffected < 1 {
+		return photo, "", fmt.Errorf("order not found")
+	}
+
+	filePath := "storage/"
+	urlImage := filePath + photo.File_Name
+
+	return photo, urlImage, nil
 }
 
 func (r *RepositoryMysqlLayer) UpdateProductPhotoByID(id int, photo model.ProductPhoto) error {
+	// Finding data
+	var img model.ProductPhoto
+	res1 := r.DB.Where("id = ?", id).Find(&img)
+	if res1.RowsAffected < 1 {
+		return fmt.Errorf("error find image")
+	}
+
+	// Delete file in local storage
+	filePath := "storage/"
+	err := os.Remove(filePath + img.File_Name)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Update data in database
 	res := r.DB.Where("id = ?", id).UpdateColumns(&photo)
 	if res.RowsAffected < 1 {
 		return fmt.Errorf("error update")
@@ -44,6 +85,21 @@ func (r *RepositoryMysqlLayer) UpdateProductPhotoByID(id int, photo model.Produc
 }
 
 func (r *RepositoryMysqlLayer) DeleteProductPhotoByID(id int) error {
+	// Finding data
+	var img model.ProductPhoto
+	res1 := r.DB.Where("id = ?", id).Find(&img)
+	if res1.RowsAffected < 1 {
+		return fmt.Errorf("error find image")
+	}
+
+	// Delete file in local storage
+	filePath := "storage/"
+	err := os.Remove(filePath + img.File_Name)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Delete data in database
 	res := r.DB.Delete(&model.ProductPhoto{ID: id})
 	if res.RowsAffected < 1 {
 		return fmt.Errorf("error delete")

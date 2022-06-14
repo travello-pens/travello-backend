@@ -23,6 +23,10 @@ func (s *serviceOrder) GetOrderByIDService(id int) (order model.Order, err error
 	return s.repo.GetOrderByID(id)
 }
 
+func (s *serviceOrder) GetOrderByProductService(product string) (order model.Order, err error) {
+	return s.repo.GetOrderByProduct(product)
+}
+
 func (s *serviceOrder) UpdateOrderByIDService(id int, order model.Order) error {
 	return s.repo.UpdateOrderByID(id, order)
 }

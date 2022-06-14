@@ -27,4 +27,5 @@ func RegisterOrderGroupAPI(e *echo.Echo, conf config.Config) {
 	apiOrder.GET("/:id", hand.GetOrderController)
 	apiOrder.PUT("/:id", hand.UpdateOrderController)
 	apiOrder.DELETE("/:id", hand.DeleteOrderController)
+	apiOrder.GET("/product/:product", hand.GetOrderByProductController)
 }

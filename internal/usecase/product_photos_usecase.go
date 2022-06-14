@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"mime/multipart"
+
 	"travel-agent-backend/config"
 	"travel-agent-backend/internal/adapter"
 	"travel-agent-backend/internal/model"
@@ -11,7 +13,9 @@ type serviceProductPhoto struct {
 	repo adapter.AdapterProductPhotoRepository
 }
 
-func (s *serviceProductPhoto) CreateProductPhotoService(photo model.ProductPhoto) error {
+func (s *serviceProductPhoto) CreateProductPhotoService(photo model.ProductPhoto, file *multipart.FileHeader) error {
+	photo.File_Name = file.Filename
+
 	return s.repo.CreateProductPhoto(photo)
 }
 
@@ -19,11 +23,17 @@ func (s *serviceProductPhoto) GetAllProductPhotosService() []model.ProductPhoto 
 	return s.repo.GetAllProductPhotos()
 }
 
-func (s *serviceProductPhoto) GetProductPhotoByIDService(id int) (photo model.ProductPhoto, err error) {
+func (s *serviceProductPhoto) GetProductPhotoByIDService(id int) (model.ProductPhoto, string, error) {
 	return s.repo.GetProductPhotoByID(id)
 }
 
-func (s *serviceProductPhoto) UpdateProductPhotoByIDService(id int, photo model.ProductPhoto) error {
+func (s *serviceProductPhoto) GetProductPhotoByProductService(product string) (model.ProductPhoto, string, error) {
+	return s.repo.GetProductPhotoByProduct(product)
+}
+
+func (s *serviceProductPhoto) UpdateProductPhotoByIDService(id int, photo model.ProductPhoto, file *multipart.FileHeader) error {
+	photo.File_Name = file.Filename
+
 	return s.repo.UpdateProductPhotoByID(id, photo)
 }
 

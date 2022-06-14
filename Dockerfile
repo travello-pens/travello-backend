@@ -3,7 +3,7 @@ FROM golang:1.17 as builder
 WORKDIR /app
 
 COPY . .
-
+COPY .env.example .env
 RUN go build -tags netgo -o main.app ./cmd/app/main.go
 
 FROM alpine:latest

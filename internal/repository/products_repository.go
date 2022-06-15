@@ -34,7 +34,7 @@ func (r *RepositoryMysqlLayer) GetProductByID(id int) (product model.Product, er
 	return
 }
 
-func (r *RepositoryMysqlLayer) GetProductsByLocation(location string) (product model.Product, err error) {
+func (r *RepositoryMysqlLayer) GetProductsByLocation(location string) (product []model.Product, err error) {
 	var loc model.Location
 	res1 := r.DB.Where("name = ?", location).Find(&loc)
 	if res1.RowsAffected < 1 {
@@ -49,7 +49,7 @@ func (r *RepositoryMysqlLayer) GetProductsByLocation(location string) (product m
 	return
 }
 
-func (r *RepositoryMysqlLayer) GetProductsByAgent(agent string) (product model.Product, err error) {
+func (r *RepositoryMysqlLayer) GetProductsByAgent(agent string) (product []model.Product, err error) {
 	var agt model.TravelAgent
 	res1 := r.DB.Where("name = ?", agent).Find(&agt)
 	if res1.RowsAffected < 1 {

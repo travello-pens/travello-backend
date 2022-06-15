@@ -23,11 +23,11 @@ func (s *serviceProduct) GetProductByIDService(id int) (product model.Product, e
 	return s.repo.GetProductByID(id)
 }
 
-func (s *serviceProduct) GetProductByLocationService(location string) (product model.Product, err error) {
+func (s *serviceProduct) GetProductByLocationService(location string) (product []model.Product, err error) {
 	return s.repo.GetProductsByLocation(location)
 }
 
-func (s *serviceProduct) GetProductByAgentService(agent string) (product model.Product, err error) {
+func (s *serviceProduct) GetProductByAgentService(agent string) (product []model.Product, err error) {
 	return s.repo.GetProductsByAgent(agent)
 }
 

@@ -86,10 +86,7 @@ func (ce *EchoProductPhotoController) CreateProductPhotoController(c echo.Contex
 func (ce *EchoProductPhotoController) GetProductPhotosController(c echo.Context) error {
 	photos := ce.Service.GetAllProductPhotosService()
 
-	return c.JSONPretty(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"photos":   photos,
-	}, " ")
+	return c.JSONPretty(http.StatusOK, photos, " ")
 }
 
 // GetProductPhotoController godoc
@@ -107,18 +104,14 @@ func (ce *EchoProductPhotoController) GetProductPhotoController(c echo.Context) 
 	id := c.Param("id")
 	intID, _ := strconv.Atoi(id)
 
-	photo, urlImage, err := ce.Service.GetProductPhotoByIDService(intID)
+	photo, err := ce.Service.GetProductPhotoByIDService(intID)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]interface{}{
 			"messages": "no id",
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"photo":    photo,
-		"file":     urlImage,
-	})
+	return c.JSON(http.StatusOK, photo)
 }
 
 // GetProductPhotoByProductController godoc
@@ -135,18 +128,14 @@ func (ce *EchoProductPhotoController) GetProductPhotoController(c echo.Context) 
 func (ce *EchoProductPhotoController) GetProductPhotoByProductController(c echo.Context) error {
 	product := c.Param("product")
 
-	photo, urlImage, err := ce.Service.GetProductPhotoByProductService(product)
+	photos, err := ce.Service.GetProductPhotoByProductService(product)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]interface{}{
 			"messages": "no product",
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"photo":    photo,
-		"file":     urlImage,
-	})
+	return c.JSONPretty(http.StatusOK, photos, " ")
 }
 
 // UpdateProductPhotoController godoc

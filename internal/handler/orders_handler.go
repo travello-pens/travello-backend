@@ -54,10 +54,7 @@ func (ce *EchoOrderController) CreateOrderController(c echo.Context) error {
 func (ce *EchoOrderController) GetOrdersController(c echo.Context) error {
 	orders := ce.Service.GetAllOrdersService()
 
-	return c.JSONPretty(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"orders":   orders,
-	}, " ")
+	return c.JSONPretty(http.StatusOK, orders, " ")
 }
 
 // GetOrderController godoc
@@ -82,10 +79,7 @@ func (ce *EchoOrderController) GetOrderController(c echo.Context) error {
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"order":    order,
-	})
+	return c.JSON(http.StatusOK, order)
 }
 
 // GetOrderByProductController godoc
@@ -102,17 +96,14 @@ func (ce *EchoOrderController) GetOrderController(c echo.Context) error {
 func (ce *EchoOrderController) GetOrderByProductController(c echo.Context) error {
 	product := c.Param("product")
 
-	order, err := ce.Service.GetOrderByProductService(product)
+	orders, err := ce.Service.GetOrderByProductService(product)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]interface{}{
 			"messages": "no product",
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"order":    order,
-	})
+	return c.JSONPretty(http.StatusOK, orders, " ")
 }
 
 // UpdateOrderController godoc

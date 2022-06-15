@@ -36,10 +36,7 @@ func (ce *EchoTravelAgentController) CreateTravelAgentController(c echo.Context)
 		})
 	}
 
-	return c.JSON(http.StatusCreated, map[string]interface{}{
-		"messages": "success",
-		"agent":    agent,
-	})
+	return c.JSON(http.StatusCreated, agent)
 }
 
 // GetTravelAgentsController godoc
@@ -54,10 +51,7 @@ func (ce *EchoTravelAgentController) CreateTravelAgentController(c echo.Context)
 func (ce *EchoTravelAgentController) GetTravelAgentsController(c echo.Context) error {
 	agents := ce.Service.GetAllTravelAgentsService()
 
-	return c.JSONPretty(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"agents":   agents,
-	}, " ")
+	return c.JSONPretty(http.StatusOK, agents, " ")
 }
 
 // GetTravelAgentController godoc
@@ -82,10 +76,31 @@ func (ce *EchoTravelAgentController) GetTravelAgentController(c echo.Context) er
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"agent":    agent,
-	})
+	return c.JSON(http.StatusOK, agent)
+}
+
+// GetTravelAgentController godoc
+// @Summary      Get Product Quantity Information by Agent
+// @Description  User can get product quantiry information by agent
+// @Tags         TravelAgent
+// @accept       json
+// @Produce      json
+// @Router       /agent/sum-product/{agent} [get]
+// @param        agent    path      string            true  "agent"
+// @Success      200  {object}  model.TravelAgent
+// @Failure      404  {object}  model.TravelAgent
+// @Security     JWT
+func (ce *EchoTravelAgentController) GetSumProductByAgentController(c echo.Context) error {
+	agent := c.Param("agent")
+
+	products, err := ce.Service.GetSumProductByAgentService(agent)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"messages": "no agent travel",
+		})
+	}
+
+	return c.JSON(http.StatusOK, products)
 }
 
 // UpdateTravelAgentController godoc

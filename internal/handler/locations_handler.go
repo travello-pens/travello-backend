@@ -54,10 +54,7 @@ func (ce *EchoLocationController) CreateLocationController(c echo.Context) error
 func (ce *EchoLocationController) GetLocationsController(c echo.Context) error {
 	locations := ce.Service.GetAllLocationsService()
 
-	return c.JSONPretty(http.StatusOK, map[string]interface{}{
-		"messages":  "success",
-		"locations": locations,
-	}, " ")
+	return c.JSONPretty(http.StatusOK, locations, " ")
 }
 
 // GetLocationController godoc
@@ -82,10 +79,7 @@ func (ce *EchoLocationController) GetLocationController(c echo.Context) error {
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"location": location,
-	})
+	return c.JSON(http.StatusOK, location)
 }
 
 // UpdateLocationController godoc

@@ -34,6 +34,22 @@ func (r *RepositoryMysqlLayer) GetTravelAgentByID(id int) (agent model.TravelAge
 	return
 }
 
+func (r *RepositoryMysqlLayer) GetSumProductByAgent(agent string) (sum int64, err error) {
+	var agt model.TravelAgent
+	res1 := r.DB.Where("name = ?", agent).Find(&agt)
+	if res1.RowsAffected < 1 {
+		err = fmt.Errorf("travel agent not found")
+	}
+
+	res2 := r.DB.Table("products").Where("id_travel_agent = ?", agt.ID).Count(&sum)
+	if res2.RowsAffected < 1 {
+		err = fmt.Errorf("product not found")
+	}
+	// res := r.DB.Where("uac.user_id = ?", "userId").Count(&count)
+
+	return
+}
+
 func (r *RepositoryMysqlLayer) UpdateTravelAgentByID(id int, agent model.TravelAgent) error {
 	res := r.DB.Where("id = ?", id).UpdateColumns(&agent)
 	if res.RowsAffected < 1 {

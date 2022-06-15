@@ -54,10 +54,7 @@ func (ce *EchoTravelAgentSocialMediaController) CreateTravelAgentSocialMediaCont
 func (ce *EchoTravelAgentSocialMediaController) GetTravelAgentSocialMediasController(c echo.Context) error {
 	medias := ce.Service.GetAllTravelAgentSocialMediasService()
 
-	return c.JSONPretty(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"medias":   medias,
-	}, " ")
+	return c.JSONPretty(http.StatusOK, medias, " ")
 }
 
 // GetTravelAgentSocialMediaController godoc
@@ -82,10 +79,7 @@ func (ce *EchoTravelAgentSocialMediaController) GetTravelAgentSocialMediaControl
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"media":    media,
-	})
+	return c.JSON(http.StatusOK, media)
 }
 
 // GetTravelAgentSocialMediaByTravelAgentController godoc
@@ -109,10 +103,7 @@ func (ce *EchoTravelAgentSocialMediaController) GetTravelAgentSocialMediaByTrave
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages":     "success",
-		"social media": media,
-	})
+	return c.JSON(http.StatusOK, media)
 }
 
 // UpdateTravelAgentSocialMediaController godoc

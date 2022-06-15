@@ -54,10 +54,7 @@ func (ce *EchoProductController) CreateProductController(c echo.Context) error {
 func (ce *EchoProductController) GetProductsController(c echo.Context) error {
 	products := ce.Service.GetAllProductsService()
 
-	return c.JSONPretty(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"products": products,
-	}, " ")
+	return c.JSONPretty(http.StatusOK, products, " ")
 }
 
 // GetProductController godoc
@@ -82,10 +79,7 @@ func (ce *EchoProductController) GetProductController(c echo.Context) error {
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"product":  product,
-	})
+	return c.JSON(http.StatusOK, product)
 }
 
 // GetProductsByLocationController godoc
@@ -109,10 +103,7 @@ func (ce *EchoProductController) GetProductsByLocationController(c echo.Context)
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"products": products,
-	})
+	return c.JSONPretty(http.StatusOK, products, " ")
 }
 
 // GetProductsByAgentController godoc
@@ -136,10 +127,7 @@ func (ce *EchoProductController) GetProductsByAgentController(c echo.Context) er
 		})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"messages": "success",
-		"products": products,
-	})
+	return c.JSONPretty(http.StatusOK, products, " ")
 }
 
 // UpdateProductController godoc

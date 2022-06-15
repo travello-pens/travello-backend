@@ -27,37 +27,37 @@ func (r *RepositoryMysqlLayer) GetAllProductPhotos() []model.ProductPhoto {
 	return photos
 }
 
-func (r *RepositoryMysqlLayer) GetProductPhotoByID(id int) (model.ProductPhoto, string, error) {
+func (r *RepositoryMysqlLayer) GetProductPhotoByID(id int) (model.ProductPhoto, error) {
 	var photo model.ProductPhoto
 
 	res := r.DB.Where("id = ?", id).Find(&photo)
 	if res.RowsAffected < 1 {
-		return photo, "", fmt.Errorf("not found")
+		return photo, fmt.Errorf("not found")
 	}
 
-	filePath := "storage/"
-	urlImage := filePath + photo.File_Name
+	// filePath := "storage/"
+	// urlImage := filePath + photo.File_Name
 
-	return photo, urlImage, nil
+	return photo, nil
 }
 
-func (r *RepositoryMysqlLayer) GetProductPhotoByProduct(product string) (model.ProductPhoto, string, error) {
+func (r *RepositoryMysqlLayer) GetProductPhotoByProduct(product string) ([]model.ProductPhoto, error) {
 	var prod model.Product
 	res1 := r.DB.Where("name = ?", product).Find(&prod)
 	if res1.RowsAffected < 1 {
-		return model.ProductPhoto{}, "", fmt.Errorf("not found")
+		return []model.ProductPhoto{}, fmt.Errorf("not found")
 	}
 
-	var photo model.ProductPhoto
+	var photo []model.ProductPhoto
 	res2 := r.DB.Where("id_product = ?", prod.ID).Find(&photo)
 	if res2.RowsAffected < 1 {
-		return photo, "", fmt.Errorf("order not found")
+		return photo, fmt.Errorf("order not found")
 	}
 
-	filePath := "storage/"
-	urlImage := filePath + photo.File_Name
+	// filePath := "storage/"
+	// urlImage := filePath + photo.File_Name
 
-	return photo, urlImage, nil
+	return photo, nil
 }
 
 func (r *RepositoryMysqlLayer) UpdateProductPhotoByID(id int, photo model.ProductPhoto) error {

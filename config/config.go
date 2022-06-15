@@ -18,9 +18,12 @@ func InitConfig() Config {
 		DB_USERNAME:    GetOrDefault("DB_USERNAME", "travello-backend"),
 		DB_PASSWORD:    GetOrDefault("DB_PASSWORD", "travelmhHyUEf8h"),
 		DB_NAME:        GetOrDefault("DB_NAME", "travello"),
-		DB_PORT:        GetOrDefault("DB_PORT", "3306"),
 		DB_HOST:        GetOrDefault("DB_HOST", "10.0.0.4"),
+		DB_PORT:        GetOrDefault("DB_PORT", "3306"),
 		JWT_KEY:        GetOrDefault("JWT_KEY", "AlphaWolf"),
+		// DB_USERNAME:    GetOrDefault("DB_USERNAME", "root"),
+		// DB_PASSWORD:    GetOrDefault("DB_PASSWORD", ""),
+		// DB_HOST:        GetOrDefault("DB_HOST", "127.0.0.1"),
 	}
 }
 

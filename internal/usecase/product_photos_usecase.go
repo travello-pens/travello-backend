@@ -23,11 +23,11 @@ func (s *serviceProductPhoto) GetAllProductPhotosService() []model.ProductPhoto 
 	return s.repo.GetAllProductPhotos()
 }
 
-func (s *serviceProductPhoto) GetProductPhotoByIDService(id int) (model.ProductPhoto, string, error) {
+func (s *serviceProductPhoto) GetProductPhotoByIDService(id int) (model.ProductPhoto, error) {
 	return s.repo.GetProductPhotoByID(id)
 }
 
-func (s *serviceProductPhoto) GetProductPhotoByProductService(product string) (model.ProductPhoto, string, error) {
+func (s *serviceProductPhoto) GetProductPhotoByProductService(product string) ([]model.ProductPhoto, error) {
 	return s.repo.GetProductPhotoByProduct(product)
 }
 

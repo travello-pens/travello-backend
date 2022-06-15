@@ -17,7 +17,7 @@ func RegisterTravelAgentGroupAPI(e *echo.Echo, conf config.Config) {
 	service := u.NewServiceTravelAgent(repo, conf)
 	hand := h.EchoTravelAgentController{Service: service}
 
-	apiTravelAgent := e.Group("/travel-agent",
+	apiTravelAgent := e.Group("/agent",
 		middleware.Logger(),
 		middleware.CORS(),
 	)

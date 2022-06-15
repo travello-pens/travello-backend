@@ -79,7 +79,7 @@ func (ce *EchoTravelAgentController) GetTravelAgentController(c echo.Context) er
 	return c.JSON(http.StatusOK, agent)
 }
 
-// GetTravelAgentController godoc
+// GetSumProductByAgentController godoc
 // @Summary      Get Product Quantity Information by Agent
 // @Description  User can get product quantiry information by agent
 // @Tags         TravelAgent
@@ -94,6 +94,27 @@ func (ce *EchoTravelAgentController) GetSumProductByAgentController(c echo.Conte
 	agent := c.Param("agent")
 
 	products, err := ce.Service.GetSumProductByAgentService(agent)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"messages": "no agent travel",
+		})
+	}
+
+	return c.JSON(http.StatusOK, products)
+}
+
+// GetProductsByAgentTravelController godoc
+// @Summary      Get Product Information by Agent
+// @Description  User can get product information by agent
+// @Tags         TravelAgent
+// @accept       json
+// @Produce      json
+// @Router       /agent/product [get]
+// @Success      200  {object}  model.TravelAgent
+// @Failure      404  {object}  model.TravelAgent
+// @Security     JWT
+func (ce *EchoTravelAgentController) GetProductsByAgentTravelController(c echo.Context) error {
+	products, err := ce.Service.GetProductsByAgentService()
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]interface{}{
 			"messages": "no agent travel",

@@ -36,7 +36,7 @@ func (r *RepositoryMysqlLayer) GetTravelAgentByID(id int) (agent model.TravelAge
 
 func (r *RepositoryMysqlLayer) GetSumProductByAgent(agent string) (sum int64, err error) {
 	var agt model.TravelAgent
-	res1 := r.DB.Where("name = ?", agent).Find(&agt)
+	res1 := r.DB.Where("name_agent = ?", agent).Find(&agt)
 	if res1.RowsAffected < 1 {
 		err = fmt.Errorf("travel agent not found")
 	}
@@ -46,6 +46,20 @@ func (r *RepositoryMysqlLayer) GetSumProductByAgent(agent string) (sum int64, er
 		err = fmt.Errorf("product not found")
 	}
 	// res := r.DB.Where("uac.user_id = ?", "userId").Count(&count)
+
+	return
+}
+
+func (r *RepositoryMysqlLayer) GetProductsByAgentTravel() (product []model.TravelAgentProduct, err error) {
+	res := r.DB.Table("travel_agents ta").
+		Joins("LEFT JOIN products p ON p.id_travel_agent = ta.id").
+		Joins("LEFT JOIN locations l ON p.id_location = l.id").
+		Select("ta.name_agent, ta.address, ta.phone_number, p.name_product, l.name_location, p.price, p.description, p.length_of_stay, p.address_of_product, p.tax, p.lodging, p.airport_pickup, p.refund").
+		Find(&product)
+
+	if res.RowsAffected < 1 {
+		err = fmt.Errorf("not found")
+	}
 
 	return
 }

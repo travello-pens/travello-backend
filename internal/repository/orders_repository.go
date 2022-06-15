@@ -36,7 +36,7 @@ func (r *RepositoryMysqlLayer) GetOrderByID(id int) (order model.Order, err erro
 
 func (r *RepositoryMysqlLayer) GetOrderByProduct(product string) (order []model.Order, err error) {
 	var prod model.Product
-	res1 := r.DB.Where("name = ?", product).Find(&prod)
+	res1 := r.DB.Where("name_product = ?", product).Find(&prod)
 	if res1.RowsAffected < 1 {
 		err = fmt.Errorf("not found")
 	}

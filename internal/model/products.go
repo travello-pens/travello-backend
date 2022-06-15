@@ -6,7 +6,7 @@ type Product struct {
 	ID                 int       `json:"id" form:"id"`
 	ID_Travel_Agent    int       `json:"id_travel_agent" form:"id_travel_agent"`
 	ID_Location        int       `json:"id_location" form:"id_location"`
-	Name               string    `json:"name" form:"name"`
+	Name_Product       string    `json:"name_product" form:"name_product"`
 	Price              float64   `json:"price" form:"price"`
 	Description        string    `json:"description" form:"description"`
 	Length_Of_Stay     int       `json:"length_of_stay" form:"length_of_stay"`

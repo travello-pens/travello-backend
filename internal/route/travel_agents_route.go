@@ -27,5 +27,6 @@ func RegisterTravelAgentGroupAPI(e *echo.Echo, conf config.Config) {
 	apiTravelAgent.GET("/:id", hand.GetTravelAgentController)
 	apiTravelAgent.PUT("/:id", hand.UpdateTravelAgentController)
 	apiTravelAgent.DELETE("/:id", hand.DeleteTravelAgentController)
+	apiTravelAgent.GET("/product", hand.GetProductsByAgentTravelController)
 	apiTravelAgent.GET("/sum-product/:agent", hand.GetSumProductByAgentController)
 }

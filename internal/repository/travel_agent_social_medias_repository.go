@@ -36,7 +36,7 @@ func (r *RepositoryMysqlLayer) GetTravelAgentSocialMediaByID(id int) (media mode
 
 func (r *RepositoryMysqlLayer) GetTravelAgentSocialMediaByTravelAgent(agent string) (media model.TravelAgentSocialMedia, err error) {
 	var agt model.TravelAgent
-	res1 := r.DB.Where("name = ?", agent).Find(&agt)
+	res1 := r.DB.Where("name_agent = ?", agent).Find(&agt)
 	if res1.RowsAffected < 1 {
 		err = fmt.Errorf("travel agent not found")
 	}

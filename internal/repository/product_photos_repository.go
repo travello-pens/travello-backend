@@ -43,7 +43,7 @@ func (r *RepositoryMysqlLayer) GetProductPhotoByID(id int) (model.ProductPhoto, 
 
 func (r *RepositoryMysqlLayer) GetProductPhotoByProduct(product string) ([]model.ProductPhoto, error) {
 	var prod model.Product
-	res1 := r.DB.Where("name = ?", product).Find(&prod)
+	res1 := r.DB.Where("name_product = ?", product).Find(&prod)
 	if res1.RowsAffected < 1 {
 		return []model.ProductPhoto{}, fmt.Errorf("not found")
 	}

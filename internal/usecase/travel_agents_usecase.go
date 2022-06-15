@@ -27,6 +27,10 @@ func (s *serviceTravelAgent) GetSumProductByAgentService(agent string) (sum int6
 	return s.repo.GetSumProductByAgent(agent)
 }
 
+func (s *serviceTravelAgent) GetProductsByAgentService() ([]model.TravelAgentProduct, error) {
+	return s.repo.GetProductsByAgentTravel()
+}
+
 func (s *serviceTravelAgent) UpdateTravelAgentByIDService(id int, agent model.TravelAgent) error {
 	return s.repo.UpdateTravelAgentByID(id, agent)
 }

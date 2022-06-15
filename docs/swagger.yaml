@@ -31,6 +31,8 @@ definitions:
     type: object
   model.Product:
     properties:
+      address_of_product:
+        type: string
       airport_pickup:
         type: integer
       created_at:
@@ -43,12 +45,14 @@ definitions:
         type: integer
       id_travel_agent:
         type: integer
+      length_of_stay:
+        type: integer
       lodging:
         type: integer
       name:
         type: string
       price:
-        type: integer
+        type: number
       refund:
         type: integer
       tax:
@@ -254,6 +258,33 @@ paths:
       security:
       - JWT: []
       summary: Update Travel Agent Information
+      tags:
+      - TravelAgent
+  /agent/sum-product/{agent}:
+    get:
+      consumes:
+      - application/json
+      description: User can get product quantiry information by agent
+      parameters:
+      - description: agent
+        in: path
+        name: agent
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.TravelAgent'
+      security:
+      - JWT: []
+      summary: Get Product Quantity Information by Agent
       tags:
       - TravelAgent
   /location:

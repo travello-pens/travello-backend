@@ -87,6 +87,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/agent/sum-product/{agent}": {
+            "get": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "User can get product quantiry information by agent",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TravelAgent"
+                ],
+                "summary": "Get Product Quantity Information by Agent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "agent",
+                        "name": "agent",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.TravelAgent"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.TravelAgent"
+                        }
+                    }
+                }
+            }
+        },
         "/agent/{id}": {
             "get": {
                 "security": [
@@ -1785,6 +1828,9 @@ const docTemplate = `{
         "model.Product": {
             "type": "object",
             "properties": {
+                "address_of_product": {
+                    "type": "string"
+                },
                 "airport_pickup": {
                     "type": "integer"
                 },
@@ -1803,6 +1849,9 @@ const docTemplate = `{
                 "id_travel_agent": {
                     "type": "integer"
                 },
+                "length_of_stay": {
+                    "type": "integer"
+                },
                 "lodging": {
                     "type": "integer"
                 },
@@ -1810,7 +1859,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "price": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "refund": {
                     "type": "integer"

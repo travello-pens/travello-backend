@@ -25,8 +25,15 @@ func (r *RepositoryMysqlLayer) GetAllProducts() []model.Product {
 	return products
 }
 
-func (r *RepositoryMysqlLayer) GetProductByID(id int) (product model.Product, err error) {
-	res := r.DB.Where("id = ?", id).Find(&product)
+func (r *RepositoryMysqlLayer) GetProductByID(id int) (product model.TravelAgentProduct, err error) {
+	res := r.DB.Table("travel_agents ta").
+		Joins("LEFT JOIN products p ON p.id_travel_agent = ta.id").
+		Joins("LEFT JOIN locations l ON p.id_location = l.id").
+		Select("ta.name_agent, ta.address, ta.phone_number, p.name_product, l.name_location, p.price, p.description, p.length_of_stay, p.address_of_product, p.tax, p.lodging, p.airport_pickup, p.refund").
+		Where("ta.id = ?", id).
+		Find(&product)
+
+	// res := r.DB.Where("id = ?", id).Find(&product)
 	if res.RowsAffected < 1 {
 		err = fmt.Errorf("not found")
 	}

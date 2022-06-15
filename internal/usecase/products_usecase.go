@@ -19,7 +19,7 @@ func (s *serviceProduct) GetAllProductsService() []model.Product {
 	return s.repo.GetAllProducts()
 }
 
-func (s *serviceProduct) GetProductByIDService(id int) (product model.Product, err error) {
+func (s *serviceProduct) GetProductByIDService(id int) (model.TravelAgentProduct, error) {
 	return s.repo.GetProductByID(id)
 }
 

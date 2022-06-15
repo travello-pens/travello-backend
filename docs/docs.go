@@ -87,6 +87,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/agent/product": {
+            "get": {
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "description": "User can get product information by agent",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TravelAgent"
+                ],
+                "summary": "Get Product Information by Agent",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.TravelAgent"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.TravelAgent"
+                        }
+                    }
+                }
+            }
+        },
         "/agent/sum-product/{agent}": {
             "get": {
                 "security": [
@@ -1788,7 +1822,7 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
-                "name": {
+                "name_location": {
                     "type": "string"
                 },
                 "updated_at": {
@@ -1855,7 +1889,7 @@ const docTemplate = `{
                 "lodging": {
                     "type": "integer"
                 },
-                "name": {
+                "name_product": {
                     "type": "string"
                 },
                 "price": {
@@ -1904,7 +1938,7 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
-                "name": {
+                "name_agent": {
                     "type": "string"
                 },
                 "phone_number": {
